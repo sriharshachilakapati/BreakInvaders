@@ -40,9 +40,9 @@ public class LoadingState extends GameState
     public void onEnter()
     {
         // Define the resources
-        ballID = resourceLoader.define(Texture.class, FilePath.getResourceFile("assets/breakinvaders/ball.png"));
-        paddleID = resourceLoader.define(Texture.class, FilePath.getResourceFile("assets/breakinvaders/paddle.png"));
-        spaceShipID = resourceLoader.define(Texture.class, FilePath.getResourceFile("assets/breakinvaders/space_ship.png"));
+        ballID = resourceLoader.define(Texture.class, FilePath.getResourceFile("assets/breakinvaders/textures/ball.png"));
+        paddleID = resourceLoader.define(Texture.class, FilePath.getResourceFile("assets/breakinvaders/textures/paddle.png"));
+        spaceShipID = resourceLoader.define(Texture.class, FilePath.getResourceFile("assets/breakinvaders/textures/space_ship.png"));
         
         soundThemeID = resourceLoader.define(Sound.class, FilePath.getResourceFile("assets/breakinvaders/sounds/theme_loop.ogg"));
         soundBounceID = resourceLoader.define(Sound.class, FilePath.getResourceFile("assets/breakinvaders/sounds/bounce.ogg"));

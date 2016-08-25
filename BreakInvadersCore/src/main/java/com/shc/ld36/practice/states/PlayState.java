@@ -1,6 +1,7 @@
 package com.shc.ld36.practice.states;
 
 import com.shc.ld36.practice.Resources;
+import com.shc.ld36.practice.entities.Ball;
 import com.shc.ld36.practice.entities.Paddle;
 import com.shc.silenceengine.collision.broadphase.DynamicTree2D;
 import com.shc.silenceengine.collision.colliders.SceneCollider2D;
@@ -18,9 +19,12 @@ import com.shc.silenceengine.scene.Scene2D;
 public class PlayState extends GameState
 {
     private OrthoCam        camera;
-    private Scene2D         scene;
+    private static Scene2D  scene;
     private SceneCollider2D collider;
-
+    
+    public static Paddle    paddle;
+    public static Ball      ball;
+    
     @Override
     public void onEnter()
     {
@@ -30,7 +34,11 @@ public class PlayState extends GameState
         collider = new SceneCollider2D(new DynamicTree2D());
         collider.setScene(scene);
 
-        scene.entities.add(new Paddle());
+        paddle = new Paddle();
+        ball = new Ball();
+        
+        scene.entities.add(paddle);
+        scene.entities.add(ball);
 
         collider.register(Resources.CollisionTags.BALL, Resources.CollisionTags.SPACE_SHIP);
         collider.register(Resources.CollisionTags.BALL, Resources.CollisionTags.PADDLE);

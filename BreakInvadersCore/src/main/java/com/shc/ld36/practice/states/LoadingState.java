@@ -8,6 +8,9 @@ import com.shc.silenceengine.core.GameState;
 import com.shc.silenceengine.core.ResourceLoader;
 import com.shc.silenceengine.core.SilenceEngine;
 import com.shc.silenceengine.graphics.DynamicRenderer;
+import com.shc.silenceengine.graphics.SpriteRenderer;
+import com.shc.silenceengine.graphics.fonts.BitmapFont;
+import com.shc.silenceengine.graphics.fonts.BitmapFontRenderer;
 import com.shc.silenceengine.graphics.opengl.Primitive;
 import com.shc.silenceengine.graphics.opengl.Texture;
 import com.shc.silenceengine.graphics.programs.DynamicProgram;
@@ -31,6 +34,8 @@ public class LoadingState extends GameState
     private long soundHurtID;
     private long soundDeathID;
 
+    private long fontID;
+
     public LoadingState(BreakInvaders gameInstance)
     {
         this.gameInstance = gameInstance;
@@ -50,6 +55,8 @@ public class LoadingState extends GameState
         soundHurtID = resourceLoader.define(Sound.class, FilePath.getResourceFile("assets/breakinvaders/sounds/alien_hurt.ogg"));
         soundDeathID = resourceLoader.define(Sound.class, FilePath.getResourceFile("assets/breakinvaders/sounds/alien_death.ogg"));
 
+        fontID = resourceLoader.define(BitmapFont.class, FilePath.getResourceFile("engine_resources/fonts/roboto32px.fnt"));
+
         DynamicProgram.create(program ->
         {
             Resources.Programs.DYNAMIC = program;
@@ -58,8 +65,18 @@ public class LoadingState extends GameState
             Resources.Renderers.DYNAMIC = new DynamicRenderer(50);
             program.applyToRenderer(Resources.Renderers.DYNAMIC);
 
-            // Start loading the resources
-            resourceLoader.start();
+            SpriteRenderer.create(spriteRenderer ->
+            {
+                Resources.Renderers.SPRITE = spriteRenderer;
+
+                BitmapFontRenderer.create(fontRenderer ->
+                {
+                    Resources.Renderers.FONT = fontRenderer;
+
+                    // Start loading the resources
+                    resourceLoader.start();
+                });
+            });
         });
 
         SilenceEngine.display.setTitle("BreakInvaders: Loading please wait...");
@@ -78,6 +95,8 @@ public class LoadingState extends GameState
             Resources.Sounds.BOUNCE = resourceLoader.get(soundBounceID);
             Resources.Sounds.ALIEN_HURT = resourceLoader.get(soundHurtID);
             Resources.Sounds.ALIEN_DEATH = resourceLoader.get(soundDeathID);
+
+            Resources.Fonts.MAIN = resourceLoader.get(fontID);
 
             Resources.Sounds.THEME.play(true);
 

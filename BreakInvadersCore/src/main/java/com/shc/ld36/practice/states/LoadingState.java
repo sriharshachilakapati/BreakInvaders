@@ -8,6 +8,7 @@ import com.shc.silenceengine.core.GameState;
 import com.shc.silenceengine.core.ResourceLoader;
 import com.shc.silenceengine.core.SilenceEngine;
 import com.shc.silenceengine.graphics.DynamicRenderer;
+import com.shc.silenceengine.graphics.opengl.Primitive;
 import com.shc.silenceengine.graphics.opengl.Texture;
 import com.shc.silenceengine.graphics.programs.DynamicProgram;
 import com.shc.silenceengine.io.FilePath;
@@ -29,7 +30,7 @@ public class LoadingState extends GameState
     private long soundBounceID;
     private long soundHurtID;
     private long soundDeathID;
-    
+
     public LoadingState(BreakInvaders gameInstance)
     {
         this.gameInstance = gameInstance;
@@ -43,7 +44,7 @@ public class LoadingState extends GameState
         ballID = resourceLoader.define(Texture.class, FilePath.getResourceFile("assets/breakinvaders/textures/ball.png"));
         paddleID = resourceLoader.define(Texture.class, FilePath.getResourceFile("assets/breakinvaders/textures/paddle.png"));
         spaceShipID = resourceLoader.define(Texture.class, FilePath.getResourceFile("assets/breakinvaders/textures/space_ship.png"));
-        
+
         soundThemeID = resourceLoader.define(Sound.class, FilePath.getResourceFile("assets/breakinvaders/sounds/theme_loop.ogg"));
         soundBounceID = resourceLoader.define(Sound.class, FilePath.getResourceFile("assets/breakinvaders/sounds/bounce.ogg"));
         soundHurtID = resourceLoader.define(Sound.class, FilePath.getResourceFile("assets/breakinvaders/sounds/alien_hurt.ogg"));
@@ -77,7 +78,9 @@ public class LoadingState extends GameState
             Resources.Sounds.BOUNCE = resourceLoader.get(soundBounceID);
             Resources.Sounds.ALIEN_HURT = resourceLoader.get(soundHurtID);
             Resources.Sounds.ALIEN_DEATH = resourceLoader.get(soundDeathID);
-            
+
+            Resources.Sounds.THEME.play(true);
+
             gameInstance.setGameState(new PlayState());
         }
     }
@@ -85,6 +88,25 @@ public class LoadingState extends GameState
     @Override
     public void render(float delta)
     {
-        // Draw the progress bar here
+        if ( !resourceLoader.isDone() && Resources.Renderers.DYNAMIC != null)
+        {
+            DynamicRenderer dynamicRenderer = Resources.Renderers.DYNAMIC;
+
+            dynamicRenderer.begin(Primitive.TRIANGLE_STRIP);
+            {
+                dynamicRenderer.vertex(100, 100);
+                dynamicRenderer.texCoord(0, 0);
+
+                dynamicRenderer.vertex(200, 100);
+                dynamicRenderer.texCoord(1, 0);
+
+                dynamicRenderer.vertex(100, 200);
+                dynamicRenderer.texCoord(0, 1);
+
+                dynamicRenderer.vertex(200, 200);
+                dynamicRenderer.texCoord(1, 1);
+            }
+            dynamicRenderer.end();
+        }
     }
 }

@@ -28,6 +28,7 @@ public class LoadingState extends GameState
     private long ballID;
     private long paddleID;
     private long spaceShipID;
+    private long bgID;
 
     private long soundThemeID;
     private long soundBounceID;
@@ -49,6 +50,7 @@ public class LoadingState extends GameState
         ballID = resourceLoader.define(Texture.class, FilePath.getResourceFile("assets/breakinvaders/textures/ball.png"));
         paddleID = resourceLoader.define(Texture.class, FilePath.getResourceFile("assets/breakinvaders/textures/paddle.png"));
         spaceShipID = resourceLoader.define(Texture.class, FilePath.getResourceFile("assets/breakinvaders/textures/space_ship.png"));
+        bgID = resourceLoader.define(Texture.class, FilePath.getResourceFile("assets/breakinvaders/textures/background.png"));
 
         soundThemeID = resourceLoader.define(Sound.class, FilePath.getResourceFile("assets/breakinvaders/sounds/theme_loop.ogg"));
         soundBounceID = resourceLoader.define(Sound.class, FilePath.getResourceFile("assets/breakinvaders/sounds/bounce.ogg"));
@@ -90,6 +92,7 @@ public class LoadingState extends GameState
             Resources.Textures.BALL = resourceLoader.get(ballID);
             Resources.Textures.PADDLE = resourceLoader.get(paddleID);
             Resources.Textures.SPACE_SHIP = resourceLoader.get(spaceShipID);
+            Resources.Textures.BACKGROUND = resourceLoader.get(bgID);
 
             Resources.Sounds.THEME = resourceLoader.get(soundThemeID);
             Resources.Sounds.BOUNCE = resourceLoader.get(soundBounceID);

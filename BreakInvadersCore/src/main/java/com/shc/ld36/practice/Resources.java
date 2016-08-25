@@ -16,6 +16,7 @@ public final class Resources
 {
     public final static class Textures
     {
+        public static Texture BACKGROUND;
         public static Texture SPACE_SHIP;
         public static Texture PADDLE;
         public static Texture BALL;

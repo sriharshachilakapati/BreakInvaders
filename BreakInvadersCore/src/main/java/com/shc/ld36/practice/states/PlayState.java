@@ -1,6 +1,7 @@
 package com.shc.ld36.practice.states;
 
 import com.shc.ld36.practice.Resources;
+import com.shc.ld36.practice.entities.Paddle;
 import com.shc.silenceengine.collision.broadphase.DynamicTree2D;
 import com.shc.silenceengine.collision.colliders.SceneCollider2D;
 import com.shc.silenceengine.core.GameState;
@@ -29,6 +30,8 @@ public class PlayState extends GameState
         collider = new SceneCollider2D(new DynamicTree2D());
         collider.setScene(scene);
 
+        scene.entities.add(new Paddle());
+
         collider.register(Resources.CollisionTags.BALL, Resources.CollisionTags.SPACE_SHIP);
         collider.register(Resources.CollisionTags.BALL, Resources.CollisionTags.PADDLE);
 
@@ -46,6 +49,10 @@ public class PlayState extends GameState
     @Override
     public void render(float delta)
     {
+        Resources.Renderers.SPRITE.begin();
+        scene.render(delta);
+        Resources.Renderers.SPRITE.end();
+
         BitmapFontRenderer fontRenderer = Resources.Renderers.FONT;
         BitmapFont font = Resources.Fonts.MAIN;
 
@@ -55,8 +62,6 @@ public class PlayState extends GameState
             fontRenderer.render(font, "\nUPS: " + SilenceEngine.gameLoop.getUPS(), 10, 10);
         }
         fontRenderer.end();
-
-        scene.render(delta);
     }
 
     @Override

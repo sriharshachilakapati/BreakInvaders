@@ -2,6 +2,7 @@ package com.shc.ld36.practice.states;
 
 import com.shc.ld36.practice.BreakInvaders;
 import com.shc.ld36.practice.Resources;
+import com.shc.silenceengine.audio.Sound;
 import com.shc.silenceengine.core.Game;
 import com.shc.silenceengine.core.GameState;
 import com.shc.silenceengine.core.ResourceLoader;
@@ -24,6 +25,11 @@ public class LoadingState extends GameState
     private long paddleID;
     private long spaceShipID;
 
+    private long soundThemeID;
+    private long soundBounceID;
+    private long soundHurtID;
+    private long soundDeathID;
+    
     public LoadingState(BreakInvaders gameInstance)
     {
         this.gameInstance = gameInstance;
@@ -37,6 +43,11 @@ public class LoadingState extends GameState
         ballID = resourceLoader.define(Texture.class, FilePath.getResourceFile("assets/breakinvaders/ball.png"));
         paddleID = resourceLoader.define(Texture.class, FilePath.getResourceFile("assets/breakinvaders/paddle.png"));
         spaceShipID = resourceLoader.define(Texture.class, FilePath.getResourceFile("assets/breakinvaders/space_ship.png"));
+        
+        soundThemeID = resourceLoader.define(Sound.class, FilePath.getResourceFile("assets/breakinvaders/sounds/theme_loop.ogg"));
+        soundBounceID = resourceLoader.define(Sound.class, FilePath.getResourceFile("assets/breakinvaders/sounds/bounce.ogg"));
+        soundHurtID = resourceLoader.define(Sound.class, FilePath.getResourceFile("assets/breakinvaders/sounds/alien_hurt.ogg"));
+        soundDeathID = resourceLoader.define(Sound.class, FilePath.getResourceFile("assets/breakinvaders/sounds/alien_death.ogg"));
 
         DynamicProgram.create(program ->
         {
@@ -62,6 +73,11 @@ public class LoadingState extends GameState
             Resources.Textures.PADDLE = resourceLoader.get(paddleID);
             Resources.Textures.SPACE_SHIP = resourceLoader.get(spaceShipID);
 
+            Resources.Sounds.THEME = resourceLoader.get(soundThemeID);
+            Resources.Sounds.BOUNCE = resourceLoader.get(soundBounceID);
+            Resources.Sounds.ALIEN_HURT = resourceLoader.get(soundHurtID);
+            Resources.Sounds.ALIEN_DEATH = resourceLoader.get(soundDeathID);
+            
             gameInstance.setGameState(new PlayState());
         }
     }

@@ -1,6 +1,7 @@
 package com.shc.ld36.practice.entities;
 
 import com.shc.ld36.practice.Resources;
+import com.shc.silenceengine.core.SilenceEngine;
 import com.shc.silenceengine.graphics.Sprite;
 import com.shc.silenceengine.input.Keyboard;
 import com.shc.silenceengine.scene.components.SpriteComponent;
@@ -13,7 +14,7 @@ public class Paddle extends Entity2D
 {
     public Paddle()
     {
-        position.set(100, 500);
+        position.set(SilenceEngine.display.getWidth() / 2 - 24, 650);
 
         SpriteComponent spriteComponent = new SpriteComponent(new Sprite(Resources.Textures.PADDLE), Resources.Renderers.SPRITE);
 

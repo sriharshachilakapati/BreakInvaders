@@ -1,0 +1,1 @@
+include 'BreakInvadersCore', 'BreakInvadersAndroid', 'BreakInvadersDesktop', 'BreakInvadersHtml5'

@@ -1,0 +1,10 @@
+.gradle/
+.idea/
+build/
+classes/
+captures/
+BreakInvadersAndroid/build/
+BreakInvadersCore/build/
+BreakInvadersDesktop/build/
+BreakInvadersHtml5/build/
+BreakInvadersHtml5/war/

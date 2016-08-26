@@ -21,6 +21,10 @@ public class BreakInvaders extends Game
         GLContext.enable(GL_BLEND);
         GLContext.blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+        // Enable touch faking in all platforms except android
+        if (SilenceEngine.display.getPlatform() != SilenceEngine.Platform.ANDROID)
+            SilenceEngine.input.setSimulateTouch(true);
+
         setGameState(new LoadingState(this));
     }
 

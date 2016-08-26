@@ -13,7 +13,10 @@ import com.shc.silenceengine.graphics.fonts.BitmapFont;
 import com.shc.silenceengine.graphics.fonts.BitmapFontRenderer;
 import com.shc.silenceengine.graphics.opengl.GLContext;
 import com.shc.silenceengine.graphics.opengl.Primitive;
+import com.shc.silenceengine.input.Touch;
 import com.shc.silenceengine.scene.Scene2D;
+
+import static com.shc.silenceengine.input.Keyboard.*;
 
 /**
  * @author Sri Harsha Chilakapati
@@ -22,8 +25,10 @@ public class PlayState extends GameState
 {
     private static Scene2D scene;
 
-    public static Paddle paddle;
-    public static Ball   ball;
+    private boolean fakedKeyInput;
+
+    public static Paddle PADDLE;
+    public static Ball   BALL;
 
     private OrthoCam        camera;
     private SceneCollider2D collider;
@@ -37,11 +42,11 @@ public class PlayState extends GameState
         collider = new SceneCollider2D(new DynamicTree2D());
         collider.setScene(scene);
 
-        paddle = new Paddle();
-        ball = new Ball();
+        PADDLE = new Paddle();
+        BALL = new Ball();
 
-        scene.entities.add(paddle);
-        scene.entities.add(ball);
+        scene.entities.add(PADDLE);
+        scene.entities.add(BALL);
 
         collider.register(Resources.CollisionTags.BALL, Resources.CollisionTags.SPACE_SHIP);
         collider.register(Resources.CollisionTags.BALL, Resources.CollisionTags.PADDLE);
@@ -53,6 +58,35 @@ public class PlayState extends GameState
     @Override
     public void update(float delta)
     {
+        // Send fake touch to key events
+        if (Touch.isFingerDown(Touch.FINGER_0))
+        {
+            fakedKeyInput = true;
+
+            // Get the x coordinate of the touch
+            final float x = Touch.getFingerPosition(Touch.FINGER_0).x;
+
+            // If the right side of the screen is touched, generate KEY_RIGHT event
+            if (x > SilenceEngine.display.getWidth() / 2)
+            {
+                SilenceEngine.input.postKeyEvent(KEY_RIGHT, true);
+                SilenceEngine.input.postKeyEvent(KEY_LEFT, false);
+            }
+            else
+            {
+                SilenceEngine.input.postKeyEvent(KEY_RIGHT, false);
+                SilenceEngine.input.postKeyEvent(KEY_LEFT, true);
+            }
+        }
+        else if (fakedKeyInput)
+        {
+            SilenceEngine.input.postKeyEvent(KEY_RIGHT, false);
+            SilenceEngine.input.postKeyEvent(KEY_LEFT, false);
+            SilenceEngine.input.postKeyEvent(KEY_SPACE, false);
+
+            fakedKeyInput = false;
+        }
+
         scene.update(delta);
         collider.checkCollisions();
     }

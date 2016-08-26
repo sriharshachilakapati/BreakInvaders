@@ -20,12 +20,13 @@ import com.shc.silenceengine.scene.Scene2D;
  */
 public class PlayState extends GameState
 {
-    private OrthoCam        camera;
-    private static Scene2D  scene;
-    private SceneCollider2D collider;
+    private static Scene2D scene;
 
-    public static Paddle    paddle;
-    public static Ball      ball;
+    public static Paddle paddle;
+    public static Ball   ball;
+
+    private OrthoCam        camera;
+    private SceneCollider2D collider;
 
     @Override
     public void onEnter()

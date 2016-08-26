@@ -110,7 +110,7 @@ public class LoadingState extends GameState
     @Override
     public void render(float delta)
     {
-        if ( !resourceLoader.isDone() && Resources.Renderers.DYNAMIC != null)
+        if (!resourceLoader.isDone() && Resources.Renderers.DYNAMIC != null)
         {
             DynamicRenderer dynamicRenderer = Resources.Renderers.DYNAMIC;
 

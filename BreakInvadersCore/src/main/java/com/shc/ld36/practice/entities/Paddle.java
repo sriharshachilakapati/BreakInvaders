@@ -4,6 +4,8 @@ import com.shc.ld36.practice.Resources;
 import com.shc.silenceengine.core.SilenceEngine;
 import com.shc.silenceengine.graphics.Sprite;
 import com.shc.silenceengine.input.Keyboard;
+import com.shc.silenceengine.math.geom2d.Rectangle;
+import com.shc.silenceengine.scene.components.CollisionComponent2D;
 import com.shc.silenceengine.scene.components.SpriteComponent;
 import com.shc.silenceengine.scene.entity.Entity2D;
 
@@ -16,9 +18,11 @@ public class Paddle extends Entity2D
     {
         position.set(SilenceEngine.display.getWidth() / 2 - 24, 650);
 
-        SpriteComponent spriteComponent = new SpriteComponent(new Sprite(Resources.Textures.PADDLE), Resources.Renderers.SPRITE);
+        final float width = Resources.Textures.PADDLE.getWidth();
+        final float height = Resources.Textures.PADDLE.getHeight();
 
-        addComponent(spriteComponent);
+        addComponent(new SpriteComponent(new Sprite(Resources.Textures.PADDLE), Resources.Renderers.SPRITE));
+        addComponent(new CollisionComponent2D(Resources.CollisionTags.PADDLE, new Rectangle(width, height)));
     }
 
     @Override

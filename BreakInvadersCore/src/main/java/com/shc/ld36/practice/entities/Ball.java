@@ -15,9 +15,11 @@ public class Ball extends Entity2D
 {
     private final static int RADIUS = 24;
 
-    public static boolean DEAD = false;
+    private boolean dead;
 
     private Vector2 speed = new Vector2();
+
+    private CollisionComponent2D collisionComponent;
 
     public Ball()
     {
@@ -27,7 +29,8 @@ public class Ball extends Entity2D
         final float height = Resources.Textures.BALL.getHeight();
 
         addComponent(new SpriteComponent(new Sprite(Resources.Textures.BALL), Resources.Renderers.SPRITE));
-        addComponent(new CollisionComponent2D(Resources.CollisionTags.BALL, new Rectangle(width, height), this::onCollision));
+        addComponent(collisionComponent =
+                new CollisionComponent2D(Resources.CollisionTags.BALL, new Rectangle(width, height), this::onCollision));
     }
 
     private void reSpawn()
@@ -43,16 +46,39 @@ public class Ball extends Entity2D
             speed.y *= -1;
             position.y += speed.y;
         }
+
+        else if (other.entity instanceof SpaceShip)
+        {
+            final Rectangle sBounds = collisionComponent.polygon.getBounds();
+            final Rectangle oBounds = other.polygon.getBounds();
+
+            final float iWidth = oBounds.getIntersectionWidth(sBounds);
+            final float iHeight = oBounds.getIntersectionHeight(sBounds);
+
+            if (iWidth > iHeight)
+            {
+                speed.y *= -1;
+                position.y += speed.y;
+            }
+
+            if (iHeight > iWidth)
+            {
+                speed.x *= -1;
+                position.x += speed.x;
+            }
+
+            PlayState.SCENE.entities.remove(other.entity);
+        }
     }
 
     @Override
     protected void onUpdate(float deltaTime)
     {
-        if (DEAD)
+        if (dead)
         {
             if (Keyboard.isKeyTapped(Keyboard.KEY_LEFT) || Keyboard.isKeyTapped(Keyboard.KEY_RIGHT))
             {
-                DEAD = false;
+                dead = false;
                 reSpawn();
             }
             else
@@ -75,7 +101,7 @@ public class Ball extends Entity2D
 
         if (position.y >= SilenceEngine.display.getHeight() - RADIUS)
         {
-            DEAD = true;
+            dead = true;
             position.y = SilenceEngine.display.getHeight() + 2 * RADIUS;
         }
     }

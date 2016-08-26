@@ -3,6 +3,7 @@ package com.shc.ld36.practice.states;
 import com.shc.ld36.practice.Resources;
 import com.shc.ld36.practice.entities.Ball;
 import com.shc.ld36.practice.entities.Paddle;
+import com.shc.ld36.practice.entities.SpaceShip;
 import com.shc.silenceengine.collision.broadphase.DynamicTree2D;
 import com.shc.silenceengine.collision.colliders.SceneCollider2D;
 import com.shc.silenceengine.core.GameState;
@@ -23,7 +24,7 @@ import static com.shc.silenceengine.input.Keyboard.*;
  */
 public class PlayState extends GameState
 {
-    private static Scene2D scene;
+    public static Scene2D SCENE;
 
     private boolean fakedKeyInput;
 
@@ -38,15 +39,18 @@ public class PlayState extends GameState
     {
         SilenceEngine.display.setTitle("BreakInvaders: Get set Go!!!");
 
-        scene = new Scene2D();
+        SCENE = new Scene2D();
         collider = new SceneCollider2D(new DynamicTree2D());
-        collider.setScene(scene);
+        collider.setScene(SCENE);
 
         PADDLE = new Paddle();
         BALL = new Ball();
 
-        scene.entities.add(PADDLE);
-        scene.entities.add(BALL);
+        SCENE.entities.add(PADDLE);
+        SCENE.entities.add(BALL);
+
+        for (int i = 1; i < 12; i++)
+            SCENE.entities.add(new SpaceShip(i++ * Resources.Textures.SPACE_SHIP.getWidth() / 1.5f, 100));
 
         collider.register(Resources.CollisionTags.BALL, Resources.CollisionTags.SPACE_SHIP);
         collider.register(Resources.CollisionTags.BALL, Resources.CollisionTags.PADDLE);
@@ -87,7 +91,7 @@ public class PlayState extends GameState
             fakedKeyInput = false;
         }
 
-        scene.update(delta);
+        SCENE.update(delta);
         collider.checkCollisions();
     }
 
@@ -114,7 +118,7 @@ public class PlayState extends GameState
         dynamicRenderer.end();
 
         Resources.Renderers.SPRITE.begin();
-        scene.render(delta);
+        SCENE.render(delta);
         Resources.Renderers.SPRITE.end();
 
         BitmapFontRenderer fontRenderer = Resources.Renderers.FONT;

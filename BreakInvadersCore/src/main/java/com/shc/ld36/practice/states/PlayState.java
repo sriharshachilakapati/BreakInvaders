@@ -9,6 +9,7 @@ import com.shc.silenceengine.collision.colliders.SceneCollider2D;
 import com.shc.silenceengine.core.GameState;
 import com.shc.silenceengine.core.SilenceEngine;
 import com.shc.silenceengine.graphics.DynamicRenderer;
+import com.shc.silenceengine.graphics.IGraphicsDevice;
 import com.shc.silenceengine.graphics.cameras.OrthoCam;
 import com.shc.silenceengine.graphics.fonts.BitmapFont;
 import com.shc.silenceengine.graphics.fonts.BitmapFontRenderer;
@@ -93,6 +94,8 @@ public class PlayState extends GameState
 
         SCENE.update(delta);
         collider.checkCollisions();
+
+        SilenceEngine.display.setTitle("BreakInvaders - RC: " + IGraphicsDevice.Data.renderCallsThisFrame);
     }
 
     @Override
